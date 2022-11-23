@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+    <title>Chunk Slice</title>
+
+    <!-- These 2 lines are all that is needed to activate pyscript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+</head>
+<body>
+    <h1>Welcome to Chunk Slice!</h1>
+    <h2>Upload your STL file <br/> 
+        <form action="{{ url_for('main.create') }}" method="POST" role="form" enctype="multipart/form-data">
+            <label for="myfile">Select a file:</label>
+            <input type="file" id="myfile" name="myfile" accept=".stl">
+            <br/>Enter a name: <input type="text" name="stl_name">
+            <br/>And then click <button type="submit">here</button> to see the results
+        </form>
+        
+    </h2>
+    <p>Or view the list of objects made by the community <a href={{url_for('main.list')}}>here!</a></p>
+    
+
+
+</body>
+</html>
