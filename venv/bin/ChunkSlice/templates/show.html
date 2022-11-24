@@ -21,12 +21,18 @@
     <ul>
         <li>{{ file.name }}</li>
         <li>{{ file.file }}</li>
+        <li>{{ file }}</li>
     </ul>
 
     <a href="{{ url_for('main.edit', stl_name = file.name) }}">Change name</a>
     <form action="{{ url_for('main.delete', stl_name = file.name) }}" method="POST">
         <input type="submit" value="DELETE">
     </form>
+
+    <form action="{{ url_for('main.show', stl_name = file.name) }}" method="POST" role="form" enctype="multipart/form-data">
+        <br/> <button type="submit">Graph</button> 
+    </form>
+
     {% endfor %}
     <!-- Runs python script on page load -->
     <py-config>
@@ -37,6 +43,8 @@
     <py-script src="./../static/py/show.py">
 
     </py-script>
+
+   
     <br/>
     
 </body>

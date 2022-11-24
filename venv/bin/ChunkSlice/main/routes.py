@@ -23,6 +23,7 @@ def list():
 def stl(file_name):
     return mongo.send_file(file_name)
 
+
 # Create route
 @main.route('/create', methods=['POST'])
 def create():
@@ -33,14 +34,17 @@ def create():
     return redirect(url_for('main.show', stl_name = request.form.get('stl_name')))
 
 # Show Route
-@main.route('/show/<stl_name>')
+@main.route('/show/<stl_name>', methods=["POST", "GET"])
 def show(stl_name):
     chunk_collection = mongo.db.chunkslice
     file = chunk_collection.find({'name': stl_name})
 
-    showSTL()
+    if request.method == "POST":
+        # showSTL(file['file'])
+        showSTL('/home/masonp/Documents/sponge_house_all.STL')
 
     return render_template('show.html', file = file)
+
 
 
 # Edit Route
@@ -59,6 +63,5 @@ def edit(stl_name):
 @main.route('/delete/<stl_name>', methods=['POST'])
 def delete(stl_name):
     chunk_collection = mongo.db.chunkslice
-    file = chunk_collection.find({'name': stl_name})
     chunk_collection.delete_one({'name': stl_name})
     return redirect(url_for('main.list'))
