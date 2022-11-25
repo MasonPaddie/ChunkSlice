@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, url_for
 from ChunkSlice.extensions import mongo
-from ChunkSlice.static.py.show import showSTL
+from ChunkSlice.static.py.show import *
 from werkzeug.utils import secure_filename
 
 
@@ -34,18 +34,27 @@ def create():
     return redirect(url_for('main.show', stl_name = request.form.get('stl_name')))
 
 # Show Route
-@main.route('/show/<stl_name>', methods=["POST", "GET"])
+@main.route('/show/<stl_name>')
 def show(stl_name):
     chunk_collection = mongo.db.chunkslice
     file = chunk_collection.find({'name': stl_name})
 
-    if request.method == "POST":
-        # showSTL(file['file'])
-        showSTL('/home/masonp/Documents/sponge_house_all.STL')
-
     return render_template('show.html', file = file)
 
+# Function to show the graph on the show page
+@main.route('/show/<stl_name>', methods=["POST", "GET"])
+def show_graph(stl_name):
+    chunk_collection = mongo.db.chunkslice
+    file = chunk_collection.find({'name': stl_name})
 
+    if request.method == "POST" and request.form['graph'] == 'stl':
+        # showSTL(file['file'])
+        showSTL('/home/masonp/Documents/sponge_house_all.STL')
+    elif request.form['graph'] == 'points':
+        # get_points(file['file'])
+        get_points('/home/masonp/Documents/sponge_house_all.STL')
+
+    return render_template('show.html', file = file)
 
 # Edit Route
 @main.route('/edit/<stl_name>', methods=['GET','POST'])
