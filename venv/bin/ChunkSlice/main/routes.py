@@ -47,9 +47,15 @@ def show_graph(stl_name):
     chunk_collection = mongo.db.chunkslice
     file = chunk_collection.find({'name': stl_name})
 
+    # Handles buttons
+    # Bring up the graph corresponding to the button pressed
+
+    # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
         # showSTL(file['file'])
         showSTL('/home/masonp/Documents/sponge_house_all.STL')
+
+    # Graph for plotting points    
     elif request.form['graph'] == 'points':
         # get_points(file['file'])
         get_points('/home/masonp/Documents/sponge_house_all.STL')
