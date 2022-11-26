@@ -23,7 +23,6 @@ def list():
 def stl(file_name):
     return mongo.send_file(file_name)
 
-
 # Create route
 @main.route('/create', methods=['POST'])
 def create():
@@ -45,6 +44,7 @@ def show(stl_name):
 @main.route('/show/<stl_name>', methods=["POST", "GET"])
 def show_graph(stl_name):
     chunk_collection = mongo.db.chunkslice
+    # file = chunk_collection.find_one({'name': stl_name})  Use for finding in mongo
     file = chunk_collection.find({'name': stl_name})
 
     # Handles buttons
@@ -59,6 +59,11 @@ def show_graph(stl_name):
     elif request.form['graph'] == 'points':
         # get_points(file['file'])
         get_points('/home/masonp/Documents/sponge_house_all.STL')
+
+    # Graph for plotting cubes    
+    elif request.form['graph'] == 'cubes':
+        # get_cubes(file['file'])
+        get_cubes('/home/masonp/Documents/sponge_house_all.STL')
 
     return render_template('show.html', file = file)
 
