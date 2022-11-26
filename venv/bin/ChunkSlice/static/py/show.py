@@ -33,8 +33,7 @@ def get_points(file_name):
 
     coor_arr = []
     
-
-    # Put these points into an array
+    #  # Make coor_arr containing the coorindates of every location that contains a block
     for i in range(len(x_coors)):
 
         inc = False
@@ -45,6 +44,8 @@ def get_points(file_name):
         z = math.floor(np.mean(z_coors[i])/4) + 0.5
 
         coor = [x, y, z]
+
+        # If the coordinate was recently added, do not add it again
         if i > 0:
             for elem in coor_arr[-10:]:
                 if collections.Counter(elem) == collections.Counter(coor):
@@ -54,7 +55,7 @@ def get_points(file_name):
         elif i == 0:
             coor_arr.append(coor)
 
-    print(sorted(coor_arr, key=itemgetter(0,1,2)))
+    # print(sorted(coor_arr, key=itemgetter(0,1,2)))
     polydata = vpl.PolyData()
 
     polydata.points = np.array(coor_arr, float)  
@@ -79,27 +80,41 @@ def get_cubes(file_name):
 
     polydata = vpl.PolyData()
 
+    # The overall height of the final object
+    h = 24
     
+    test_z_height = []
+    for elem in mesh.z:
+        test_z_height.append(np.mean(elem))
+
+    # Get the current height of the object
+    cur_h = (math.floor(max(test_z_height)) + 0.5) - (math.floor(min(test_z_height)) + 0.5)
+
+    # Get the scale factor
+    scale_fac = (h-1)/cur_h
+
     # Get the coorindates of each point in the mesh
-    x_coors = mesh.x
-    y_coors = mesh.y
-    z_coors = mesh.z
+    x_coors = scale_fac*mesh.x
+    y_coors = scale_fac*mesh.y
+    z_coors = scale_fac*mesh.z
 
     coor_arr = []
 
 
-    # Put these points into an array
+    # Make coor_arr containing the coorindates of every location that contains a block
     for i in range(len(x_coors)):
 
         inc = False
 
         # Rounds to the closest 0.5
-        x = math.floor(np.mean(x_coors[i])/4) + 0.5
-        y = math.floor(np.mean(y_coors[i])/4) + 0.5
-        z = math.floor(np.mean(z_coors[i])/4) + 0.5
+        x = math.floor(np.mean(x_coors[i])) + 0.5
+        y = math.floor(np.mean(y_coors[i])) + 0.5
+        z = math.floor(np.mean(z_coors[i])) + 0.5
 
         coor = [x, y, z]
         if i > 0:
+
+            # If the coordinate was recently added, do not add it again
             for elem in coor_arr[-10:]:
                 if collections.Counter(elem) == collections.Counter(coor):
                     inc = True
@@ -110,7 +125,7 @@ def get_cubes(file_name):
 
     cube_arr = []
 
-    # Make array for cubes
+    # Make array for cube vertices
     for elem in coor_arr:
         cube_arr.append([elem[0]-0.5, elem[1]-0.5, elem[2]-0.5])
         cube_arr.append([elem[0]+0.5, elem[1]-0.5, elem[2]-0.5])         
@@ -119,22 +134,14 @@ def get_cubes(file_name):
         cube_arr.append([elem[0]-0.5, elem[1]-0.5, elem[2]+0.5])
         cube_arr.append([elem[0]+0.5, elem[1]-0.5, elem[2]+0.5])
         cube_arr.append([elem[0]+0.5, elem[1]+0.5, elem[2]+0.5])
-        cube_arr.append([elem[0]-0.5, elem[1]+0.5, elem[2]+0.5])
-
-        # vpl.polygon(np.array([elem[0]-0.5, elem[1]-0.5, elem[2]-0.5], float))
-        # vpl.polygon(np.array([elem[0]+0.5, elem[1]-0.5, elem[2]-0.5], float))        
-        # vpl.polygon(np.array([elem[0]+0.5, elem[1]+0.5, elem[2]-0.5], float))
-        # vpl.polygon(np.array([elem[0]-0.5, elem[1]+0.5, elem[2]-0.5], float))
-        # vpl.polygon(np.array([elem[0]-0.5, elem[1]-0.5, elem[2]+0.5], float))
-        # vpl.polygon(np.array([elem[0]+0.5, elem[1]-0.5, elem[2]+0.5], float))
-        # vpl.polygon(np.array([elem[0]+0.5, elem[1]+0.5, elem[2]+0.5], float))
-        # vpl.polygon(np.array([elem[0]-0.5, elem[1]+0.5, elem[2]+0.5], float))
-        
+        cube_arr.append([elem[0]-0.5, elem[1]+0.5, elem[2]+0.5])        
 
     polydata.points = np.array(cube_arr, float)  
 
     line_arr = []
     solid_arr = []
+
+    # Make arrays for lines and polygon faces
     for i in range(len(coor_arr)):
         line_arr.append([8*i + 0, 8*i + 1, 8*i + 2, 8*i + 3, 8*i + 0])
         line_arr.append([8*i + 0, 8*i + 1, 8*i + 5, 8*i + 4, 8*i + 0])
@@ -162,8 +169,4 @@ def get_cubes(file_name):
     # Plot
     
     plot = polydata.to_plot()
-    vpl.polygon(np.array([[0, 0, 0],
-                                [10, 0, 0],         
-                                [10, 10, 0],
-                                [0, 10, 0]], float), color="green")
     vpl.show()
