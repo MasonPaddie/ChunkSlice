@@ -65,7 +65,7 @@ def get_points(file_name):
     vpl.scatter(polydata.points, color='green', opacity=None, radius = 0.2)
     vpl.show()
 
-def get_cubes(file_name):
+def get_cubes(file_name, des_h):
     import vtkplotlib as vpl
     import numpy as np
     import math
@@ -80,8 +80,8 @@ def get_cubes(file_name):
 
     polydata = vpl.PolyData()
 
-    # The overall height of the final object
-    h = 24
+    # The overall height of the final object is set to the desired height set by the user
+    h = des_h
     
     test_z_height = []
     for elem in mesh.z:

@@ -63,7 +63,7 @@ def show_graph(stl_name):
     # Graph for plotting cubes    
     elif request.form['graph'] == 'cubes':
         # get_cubes(file['file'])
-        get_cubes('/home/masonp/Documents/sponge_house_all.STL')
+        get_cubes('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
 
     return render_template('show.html', file = file)
 
