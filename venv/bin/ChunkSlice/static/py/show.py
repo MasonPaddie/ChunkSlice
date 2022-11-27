@@ -33,7 +33,7 @@ def get_points(file_name):
 
     coor_arr = []
     
-    #  # Make coor_arr containing the coorindates of every location that contains a block
+    # Make coor_arr containing the coorindates of every location that contains a block
     for i in range(len(x_coors)):
 
         inc = False
@@ -55,7 +55,7 @@ def get_points(file_name):
         elif i == 0:
             coor_arr.append(coor)
 
-    # print(sorted(coor_arr, key=itemgetter(0,1,2)))
+    # Polydata
     polydata = vpl.PolyData()
 
     polydata.points = np.array(coor_arr, float)  
@@ -232,6 +232,44 @@ def plot_section(file_name, des_h, layer):
         z = math.floor(np.mean(z_coors[i])) + 0.5
 
         coor = [x, y, z]
+
+        # Gets the minimum z-coordinate
+        if i == 0:
+            z_min = z
+        elif z_min > z and i > 0:
+            z_min = z
+
+        # Gets the maximum z-coordinate
+        if i == 0:
+            z_max = z
+        elif z_max < z and i > 0:
+            z_max = z
+        
+        # Gets the minimum y-coordinate
+        if i == 0:
+            y_min = y
+        elif y_min > y and i > 0:
+            y_min = y
+
+        # Gets the maximum y-coordinate
+        if i == 0:
+            y_max = y
+        elif y_max < y and i > 0:
+            y_max = y
+
+        # Gets the minimum x-coordinate
+        if i == 0:
+            x_min = x
+        elif x_min > x and i > 0:
+            x_min = x
+
+        # Gets the maximum x-coordinate
+        if i == 0:
+            x_max = x
+        elif x_max < x and i > 0:
+            x_max = x
+        
+        # Makes the coordinate array
         if i > 0:
 
             # If the coordinate was recently added, do not add it again
@@ -243,7 +281,20 @@ def plot_section(file_name, des_h, layer):
         elif i == 0:
             coor_arr.append(coor)
 
+    z_for_layer = z_min + (layer-1) 
+
+    coor_for_layer = []
+
+    # Makes the array for coordinates in the desired layer
+    coor_for_layer.append([math.floor((x_min + x_max)/2) + 0.5, math.floor((y_min + y_max)/2) + 0.5, z_for_layer])
+    for elem in coor_arr:
+        if elem[2] == z_for_layer:
+            coor_for_layer.append(elem)  
+        
+
+    polydata.points = np.array(coor_for_layer, float)  
+
     # Plot
-    
     plot = polydata.to_plot()
+    vpl.scatter(polydata.points, color='green', opacity=None, radius = 0.2)
     vpl.show()
