@@ -5,7 +5,7 @@ def showSTL(file_name):
 
     # Read the STL using numpy-stl
     # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
-    mesh = Mesh.from_file(file_name)
+    mesh = Mesh.from_file((file_name))
     
     # Plot the mesh
     vpl.mesh_plot(mesh)
@@ -157,14 +157,28 @@ def get_cubes(file_name, des_h):
         solid_arr.append([8*i + 4, 8*i + 5, 8*i + 6, 8*i + 7, 8*i + 4])
         solid_arr.append([8*i + 3, 8*i + 2, 8*i + 6, 8*i + 7, 8*i + 3])
         solid_arr.append([8*i + 1, 8*i + 2, 8*i + 6, 8*i + 5, 8*i + 1])
+
+        # vpl.plot(np.array([cube_arr[8*i + 0],cube_arr[8*i + 1],cube_arr[8*i + 2],cube_arr[8*i + 3]]), join_ends=True, color="black", line_width=2.0)
+        # vpl.plot(np.array([cube_arr[8*i + 0],cube_arr[8*i + 1],cube_arr[8*i + 5],cube_arr[8*i + 4]]), join_ends=True, color="black", line_width=2.0)
+        # vpl.plot(np.array([cube_arr[8*i + 0],cube_arr[8*i + 3],cube_arr[8*i + 7],cube_arr[8*i + 4]]), join_ends=True, color="black", line_width=2.0)
+        # vpl.plot(np.array([cube_arr[8*i + 4],cube_arr[8*i + 5],cube_arr[8*i + 6],cube_arr[8*i + 7]]), join_ends=True, color="black", line_width=2.0)
+        # vpl.plot(np.array([cube_arr[8*i + 3],cube_arr[8*i + 2],cube_arr[8*i + 6],cube_arr[8*i + 7]]), join_ends=True, color="black", line_width=2.0)
+        # vpl.plot(np.array([cube_arr[8*i + 1],cube_arr[8*i + 2],cube_arr[8*i + 6],cube_arr[8*i + 5]]), join_ends=True, color="black", line_width=2.0)
+        
    
-    
     # Create a wire-frame.
-    polydata.lines = np.array(line_arr)
+    polydata.lines = np.array(line_arr, float)
 
     
     # # Create a solid.
-    polydata.polygons = np.array(solid_arr)
+    polydata.polygons = np.array(solid_arr, float)
+
+    rgb_poly = []
+
+    for i in range(len(solid_arr)):
+        rgb_poly.append([61,47,255])
+
+    polydata.polygon_colors = np.array(rgb_poly, float)
 
     # Plot
     

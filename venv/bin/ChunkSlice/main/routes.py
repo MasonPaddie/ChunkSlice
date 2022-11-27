@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, redirect, request, url_for
 from ChunkSlice.extensions import mongo
 from ChunkSlice.static.py.show import *
 from werkzeug.utils import secure_filename
+from gridfs import GridFS
+import codecs
+import base64
 
 
 main = Blueprint('main', __name__)
@@ -21,7 +24,9 @@ def list():
 # STL Route
 @main.route('/stl/<file_name>')
 def stl(file_name):
-    return mongo.send_file(file_name)
+    chunk_collection = mongo.db.chunkslice
+    fs_file = mongo.db.fs.files.find({'filename': file_name})
+    return mongo.send_file(fs_file)
 
 # Create route
 @main.route('/create', methods=['POST'])
@@ -44,15 +49,22 @@ def show(stl_name):
 @main.route('/show/<stl_name>', methods=["POST", "GET"])
 def show_graph(stl_name):
     chunk_collection = mongo.db.chunkslice
-    # file = chunk_collection.find_one({'name': stl_name})  Use for finding in mongo
+    grid_fs = GridFS(mongo.db, collection='fs')
+    # file = chunk_collection.find_one({'name': stl_name})  # Use for finding in mongo
     file = chunk_collection.find({'name': stl_name})
+    # fs_file = grid_fs.get(file['_id'])
+    # fs_file = grid_fs.get('638259a779d688829c05f19d').read()
 
+    # base_data = codecs.encode(fs_file.read(), 'base64')
+    # fs_file = base64.decode('utf-8')
+    # fs_file = mongo.db.fs.files.find({'filename': file['file']})
+    # print(fs_file)
     # Handles buttons
     # Bring up the graph corresponding to the button pressed
 
     # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
-        # showSTL(file['file'])
+        # showSTL(fs_file)
         showSTL('/home/masonp/Documents/sponge_house_all.STL')
 
     # Graph for plotting points    
