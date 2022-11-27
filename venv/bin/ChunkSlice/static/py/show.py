@@ -176,9 +176,72 @@ def get_cubes(file_name, des_h):
     rgb_poly = []
 
     for i in range(len(solid_arr)):
-        rgb_poly.append([61,47,255])
+        rgb_poly.append([0,64,64])
 
     polydata.polygon_colors = np.array(rgb_poly, float)
+
+    # Plot
+    
+    plot = polydata.to_plot()
+    vpl.show()
+
+def plot_section(file_name, des_h, layer):
+    import vtkplotlib as vpl
+    import numpy as np
+    import math
+    import collections
+    from stl.mesh import Mesh
+    from operator import itemgetter
+    from flask import url_for
+
+    # Read the STL using numpy-stl
+    # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
+    mesh = Mesh.from_file(file_name)
+
+    polydata = vpl.PolyData()
+
+    # The overall height of the final object is set to the desired height set by the user
+    h = des_h
+    
+    test_z_height = []
+    for elem in mesh.z:
+        test_z_height.append(np.mean(elem))
+
+    # Get the current height of the object
+    cur_h = (math.floor(max(test_z_height)) + 0.5) - (math.floor(min(test_z_height)) + 0.5)
+
+    # Get the scale factor
+    scale_fac = (h-1)/cur_h
+
+    # Get the coorindates of each point in the mesh
+    x_coors = scale_fac*mesh.x
+    y_coors = scale_fac*mesh.y
+    z_coors = scale_fac*mesh.z
+
+    coor_arr = []
+
+
+    # Make coor_arr containing the coorindates of every location that contains a block
+    for i in range(len(x_coors)):
+
+        inc = False
+
+        # Rounds to the closest 0.5
+        x = math.floor(np.mean(x_coors[i])) + 0.5
+        y = math.floor(np.mean(y_coors[i])) + 0.5
+        z = math.floor(np.mean(z_coors[i])) + 0.5
+
+        coor = [x, y, z]
+        if i > 0:
+
+            # If the coordinate was recently added, do not add it again
+            for elem in coor_arr[-10:]:
+                if collections.Counter(elem) == collections.Counter(coor):
+                    inc = True
+            if inc == False:
+                coor_arr.append(coor)
+        elif i == 0:
+            coor_arr.append(coor)
 
     # Plot
     

@@ -77,6 +77,11 @@ def show_graph(stl_name):
         # get_cubes(file['file'])
         get_cubes('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
 
+    # Graph for plotting 2D cross section    
+    elif request.form['graph'] == 'cross_section':
+        # plot_section(file['file'])
+        plot_section('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']), int(request.form['layer']))
+
     return render_template('show.html', file = file)
 
 # Edit Route
