@@ -38,8 +38,8 @@
         <!-- Button for viewing 3D stl -->
         <br/> <button type="submit" name="graph" value="stl">Graph</button> 
    
-        <!-- Button for viewing points -->
-        <br/><br/> <button type="submit" name="graph" value="points">Points</button> 
+        <!-- Button for viewing points
+        <br/><br/> <button type="submit" name="graph" value="points">Points</button>  -->
 
         <!-- Button for viewing cubes -->
         <br/><br/> <button type="submit" name="graph" value="cubes">Cubes</button> 
@@ -56,8 +56,12 @@
     </form>
 
     {% endfor %}
+    <p> Height of model: {{ z_len + 1}}</p><br/>
+    <p> Width of model: {{ x_len + 1}}</p><br/>
+    <p> Length of model: {{ y_len + 1}}</p><br/>
+    <p> Number of blocks used: {{ vol }} (Still working on the accuracy of this number)</p><br/>
     <!-- Runs python script on page load -->
-    <py-config>
+    <py-config> 
         [[fetch]]
         files = ["./py/show.py"]
     </py-config>

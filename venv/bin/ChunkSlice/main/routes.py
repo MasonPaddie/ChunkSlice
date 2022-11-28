@@ -61,7 +61,7 @@ def show_graph(stl_name):
     # print(fs_file)
     # Handles buttons
     # Bring up the graph corresponding to the button pressed
-
+    [x_len, y_len, des_h, vol] = ["PEV", "PEV", "PEV", "PEV"]
     # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
         # showSTL(fs_file)
@@ -70,19 +70,19 @@ def show_graph(stl_name):
     # Graph for plotting points    
     elif request.form['graph'] == 'points':
         # get_points(file['file'])
-        get_points('/home/masonp/Documents/sponge_house_all.STL')
+         [x_len, y_len, z_len, vol] = get_points('/home/masonp/Documents/sponge_house_all.STL')
 
     # Graph for plotting cubes    
     elif request.form['graph'] == 'cubes':
         # get_cubes(file['file'])
-        get_cubes('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
+         [x_len, y_len, z_len, vol] = get_cubes('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
 
     # Graph for plotting 2D cross section    
     elif request.form['graph'] == 'cross_section':
         # plot_section(file['file'])
-        plot_section('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']), int(request.form['layer']))
+        [x_len, y_len, z_len, vol] = plot_section('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']), int(request.form['layer']))
 
-    return render_template('show.html', file = file)
+    return render_template('show.html', file = file, x_len = x_len, y_len = y_len, z_len = z_len, vol = vol)
 
 # Edit Route
 @main.route('/edit/<stl_name>', methods=['GET','POST'])
