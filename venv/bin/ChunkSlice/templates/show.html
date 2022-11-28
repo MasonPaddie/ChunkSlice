@@ -14,8 +14,8 @@
 </head>
 <body>
     <nav>
-        <p><a href={{url_for('main.list')}}>List</a></p>
-        <p><a href={{url_for('main.index')}}>Home</a></p>
+        <p><a id="list_link" href={{url_for('main.list')}}>List</a></p>
+        <p id="home_link"><a href={{url_for('main.index')}}>Home</a></p>
     </nav>
 
     <!-- List for file information from mongo -->
@@ -26,57 +26,64 @@
      
     </ul>
 
+    <div id="model_info"> 
+        {% if not vol %}
+            <div class="info_div"> <p class="info_title">Height of model: </p> <p class="info"> Enter a Height for the Model</p> </div>
+            <div class="info_div"> <p class="info_title">Width of model:</p> <p class="info"> Enter a Height for the Model</p> </div>
+            <div class="info_div"> <p class="info_title">Length of model:</p> <p class="info"> Enter a Height for the Model</p> </div>
+            <div class="info_div"> <p class="info_title">Number of blocks used:</p> <p class="info"> Enter a Height for the Model</p></div> 
+        {% else %}
+            <div class="info_div"> <p class="info_title">Height of model:</p> <p class="info"> {{ z_len }}</p> </div>
+            <div class="info_div"> <p class="info_title">Width of model:</p> <p class="info"> {{ y_len }}</p> </div>
+            <div class="info_div"> <p class="info_title">Length of model:</p> <p class="info"> {{ x_len }}</p> </div>
+            <div class="info_div"> <p class="info_title">Number of blocks used:</p> <p class="info"> {{ vol }}</p> </div>
+        {% endif %}
+    </div> 
+
     <!-- Change name link -->
-    <a href="{{ url_for('main.edit', stl_name = file.name) }}">Change name</a>
+    <a id="change_name" href="{{ url_for('main.edit', stl_name = file.name) }}">CHANGE NAME</a>
+
+    <br/><br/>
 
      <!-- Delete button form -->
-    <form action="{{ url_for('main.delete', stl_name = file.name) }}" method="POST">
-        <input type="submit" value="DELETE">
+    <form id="delete" action="{{ url_for('main.delete', stl_name = file.name) }}" method="POST">
+        <input id="delete_but" type="submit" value="DELETE">
     </form>
 
-    <!-- form for handling user input for model -->
-    <form action="{{ url_for('main.show_graph', stl_name = file.name) }}" method="POST">
+    <br/>
 
+    <!-- form for handling user input for model -->
+    <form id="main_form" action="{{ url_for('main.show_graph', stl_name = file.name) }}" method="POST">
+
+        
         <!-- Button for viewing 3D stl -->
-        <br/> <p> Press <button type="submit" name="graph" value="stl">HERE</button> to see the 3D object </p>
+        <br/> <p class="form_p"> Press <button type="submit" name="graph" value="stl">HERE</button> to see the 3D object </p>
    
         <!-- Button for viewing points -->
         <!-- <br/><br/> <button type="submit" name="graph" value="points">Points</button>  -->
 
-        <!-- Text input for height of stl model -->
-        <br/> <p> Enter the desired height <input type="number" name="des_h" placeholder="HERE">
-        <br/> and then press the CUBES button to see a minecraft model of the object  
-
-        <br/><br/>
-        OR 
-        <br/><br/>
-
-         <!-- Text input for layer to view -->
-        Enter the layer number to view <input type="number" name="layer" placeholder="HERE">
-        <br/> and press the LAYER button to see the blocks placed in that layer </p>
-
         <!-- Button for viewing cubes -->
-        <button type="submit" name="graph" value="cubes">CUBES</button>
+        <button class="buttons" type="submit" name="graph" value="cubes">CUBES</button>
+
+        <!-- Text input for height of stl model -->
+        <p> <p class="form_p">Enter the desired height <input type="number" name="des_h" placeholder="HERE">
+        <br/> and then press the CUBES button to see a minecraft model of the object </p>
 
         <!-- Button for viewing 2D cross section -->
-        <br/><br/> <button type="submit" name="graph" value="cross_section">LAYER</button> 
+        <button class="buttons" type="submit" name="graph" value="cross_section">LAYER</button> 
 
+        <p class="form_p">OR</p> 
+
+        
+         <!-- Text input for layer to view -->
+        <p class="form_p">Enter the layer number to view <input type="number" name="layer" placeholder="HERE">
+        <br/> and press the LAYER button to see the blocks placed in that layer</p></p>
+
+    
     </form>
 
     {% endfor %}
-    <p> 
-        {% if not vol %}
-            Height of model: Enter a Height for the Model<br/>
-            Width of model: Enter a Height for the Model<br/>
-            Length of model: Enter a Height for the Model<br/>
-            Number of blocks used: Enter a Height for the Model<br/>
-        {% else %}
-            Height of model: {{ z_len }}<br/>
-            Width of model: {{ x_len }}<br/>
-            Length of model: {{ y_len }}<br/>
-            Number of blocks used: {{ vol }}<br/>
-        {% endif %}
-    </p>
+
     <!-- Runs python script on page lo ad -->
     <py-config> 
         [[fetch]]
