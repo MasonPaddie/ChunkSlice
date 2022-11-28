@@ -294,7 +294,33 @@ def plot_section(file_name, des_h, layer):
 
     polydata.points = np.array(coor_for_layer, float)  
 
+    # Make array for grid lines
+    grid = []
+    lines = []
+    
+
+    # Lines in y-direction
+    lines.append([[x_min - 0.5, y_min - 0.5, z_for_layer],[x_min - 0.5, y_max + 0.5, z_for_layer]])
+
+    for i in range(int(x_max - x_min)):
+        lines.append([[x_min + i + 0.5, y_min - 0.5, z_for_layer],[x_min + i + 0.5, y_max + 0.5, z_for_layer]])
+
+    lines.append([[x_max + 0.5, y_min - 0.5, z_for_layer],[x_max + 0.5, y_max + 0.5, z_for_layer]])
+
+    # Lines in x-direction
+    lines.append([[x_min - 0.5, y_min - 0.5, z_for_layer],[x_max + 0.5, y_min - 0.5, z_for_layer]])
+
+    for i in range(int(y_max - y_min)):
+        lines.append([[x_min - 0.5, y_min + i + 0.5, z_for_layer],[x_max + 0.5, y_min + i + 0.5, z_for_layer]])
+
+    lines.append([[x_min - 0.5, y_max + 0.5, z_for_layer],[x_max + 0.5, y_max + 0.5, z_for_layer]])
+
+    grid.append([lines])
+   
+
     # Plot
-    plot = polydata.to_plot()
+    plot = polydata.to_plot() 
+    
+    vpl.plot(np.array(grid), line_width=2.0, color="red")
     vpl.scatter(polydata.points, color='green', opacity=None, radius = 0.2)
     vpl.show()
