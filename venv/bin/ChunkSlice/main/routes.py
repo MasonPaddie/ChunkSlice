@@ -3,8 +3,7 @@ from ChunkSlice.extensions import mongo
 from ChunkSlice.static.py.show import *
 from werkzeug.utils import secure_filename
 from gridfs import GridFS
-import codecs
-import base64
+
 
 
 main = Blueprint('main', __name__)
@@ -61,7 +60,7 @@ def show_graph(stl_name):
     # print(fs_file)
     # Handles buttons
     # Bring up the graph corresponding to the button pressed
-    [x_len, y_len, des_h, vol] = ["PEV", "PEV", "PEV", "PEV"]
+    [x_len, y_len, z_len, vol] = ["Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model"]
     # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
         # showSTL(fs_file)
@@ -70,7 +69,7 @@ def show_graph(stl_name):
     # Graph for plotting points    
     elif request.form['graph'] == 'points':
         # get_points(file['file'])
-         [x_len, y_len, z_len, vol] = get_points('/home/masonp/Documents/sponge_house_all.STL')
+         [x_len, y_len, z_len, vol] = get_points('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
 
     # Graph for plotting cubes    
     elif request.form['graph'] == 'cubes':

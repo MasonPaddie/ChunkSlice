@@ -21,46 +21,63 @@
     <!-- List for file information from mongo -->
     {% for file in file %}
     <ul>
-        <li>{{ file.name }}</li>
-        <li>{{ file.file }}</li>
-        <li>{{ file }}</li>
+        <li>Name of Model: {{ file.name }}</li>
+        <li>Filename: {{ file.file }}</li>
+     
     </ul>
 
-    <!-- Delete button form -->
+    <!-- Change name link -->
     <a href="{{ url_for('main.edit', stl_name = file.name) }}">Change name</a>
+
+     <!-- Delete button form -->
     <form action="{{ url_for('main.delete', stl_name = file.name) }}" method="POST">
         <input type="submit" value="DELETE">
     </form>
 
-    
+    <!-- form for handling user input for model -->
     <form action="{{ url_for('main.show_graph', stl_name = file.name) }}" method="POST">
 
         <!-- Button for viewing 3D stl -->
-        <br/> <button type="submit" name="graph" value="stl">Graph</button> 
+        <br/> <p> Press <button type="submit" name="graph" value="stl">HERE</button> to see the 3D object </p>
    
-        <!-- Button for viewing points
-        <br/><br/> <button type="submit" name="graph" value="points">Points</button>  -->
-
-        <!-- Button for viewing cubes -->
-        <br/><br/> <button type="submit" name="graph" value="cubes">Cubes</button> 
+        <!-- Button for viewing points -->
+        <!-- <br/><br/> <button type="submit" name="graph" value="points">Points</button>  -->
 
         <!-- Text input for height of stl model -->
-        <input type="number" name="des_h" placeholder="Height of Model">
+        <br/> <p> Enter the desired height <input type="number" name="des_h" placeholder="HERE">
+        <br/> and then press the CUBES button to see a minecraft model of the object  
 
-         <!-- Button for viewing 2D cross section -->
-         <br/><br/> <button type="submit" name="graph" value="cross_section">Layer</button> 
+        <br/><br/>
+        OR 
+        <br/><br/>
 
          <!-- Text input for layer to view -->
-        <input type="number" name="layer" placeholder="View Layer">
+        Enter the layer number to view <input type="number" name="layer" placeholder="HERE">
+        <br/> and press the LAYER button to see the blocks placed in that layer </p>
+
+        <!-- Button for viewing cubes -->
+        <button type="submit" name="graph" value="cubes">CUBES</button>
+
+        <!-- Button for viewing 2D cross section -->
+        <br/><br/> <button type="submit" name="graph" value="cross_section">LAYER</button> 
 
     </form>
 
     {% endfor %}
-    <p> Height of model: {{ z_len + 1}}</p><br/>
-    <p> Width of model: {{ x_len + 1}}</p><br/>
-    <p> Length of model: {{ y_len + 1}}</p><br/>
-    <p> Number of blocks used: {{ vol }} (Still working on the accuracy of this number)</p><br/>
-    <!-- Runs python script on page load -->
+    <p> 
+        {% if not vol %}
+            Height of model: Enter a Height for the Model<br/>
+            Width of model: Enter a Height for the Model<br/>
+            Length of model: Enter a Height for the Model<br/>
+            Number of blocks used: Enter a Height for the Model<br/>
+        {% else %}
+            Height of model: {{ z_len }}<br/>
+            Width of model: {{ x_len }}<br/>
+            Length of model: {{ y_len }}<br/>
+            Number of blocks used: {{ vol }}<br/>
+        {% endif %}
+    </p>
+    <!-- Runs python script on page lo ad -->
     <py-config> 
         [[fetch]]
         files = ["./py/show.py"]
