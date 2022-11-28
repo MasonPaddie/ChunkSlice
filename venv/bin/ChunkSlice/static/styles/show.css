@@ -1,3 +1,9 @@
 body {
-    background-color: chartreuse;
+    background-color: aquamarine;
+    background-image: url(https://c4.wallpaperflare.com/wallpaper/987/557/277/abstract-universe-square-optical-illusion-wallpaper-preview.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    top: 0%;
 }

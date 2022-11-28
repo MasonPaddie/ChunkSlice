@@ -129,7 +129,6 @@ def get_cubes(file_name, des_h):
 
     # Polydata
     polydata = vpl.PolyData()
-    polydata.Reset()
 
     # The overall height of the final object is set to the desired height set by the user
     h = des_h

@@ -13,8 +13,8 @@
 
 </head>
 <body>
-    <h1>Welcome to Chunk Slice!</h1>
-    <h2>Upload your STL file <br/> 
+    <h1 class="index_info" id="title">Welcome to Chunk Slice!</h1>
+    <h2 class="index_info">
         <form action="{{ url_for('main.create') }}" method="POST" role="form" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
             <input type="file" id="myfile" name="myfile" accept=".stl">
@@ -23,9 +23,9 @@
         </form>
         
     </h2>
-    <p>Or view the list of objects made by the community <a href={{url_for('main.list')}}>here!</a></p>
+    <p class="index_info">Or click <a href={{url_for('main.list')}}>here</a> to see the list of objects uploaded by the community!</p>
     
 
 
-</body>
+</body> 
 </html>

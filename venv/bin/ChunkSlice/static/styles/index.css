@@ -1,3 +1,39 @@
 body {
     background-color: aquamarine;
+    background-image: url(https://c0.wallpaperflare.com/preview/95/156/837/abstract-art-atom-background.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
+
+a {
+   text-decoration: none; 
+   color: maroon;
+}
+
+button {
+    background: none;
+    border: none;
+    color: maroon;
+    font-weight: bolder;
+}
+
+.index_info {
+    position: relative;
+    width: 25%;
+    left: 25%;
+    text-align: center;
+    color: bisque;
+    font-size: 36px;
+    font-weight: bolder;
+    -webkit-text-stroke: 1px white;
+    color: black;
+}
+
+#title {
+    font-size: 64px;
+    width: 45%;
+    left: 18%;
+}
+

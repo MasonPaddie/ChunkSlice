@@ -14,11 +14,13 @@
 </head>
 <body>
     <nav>
-        <p><a href={{url_for('main.index')}}>Home</a></p>
+        <p id="info"><a id="home_link" href={{url_for('main.index')}}>Home</a>
+        These are all the models that the community has uploaded</p>
     </nav>
+    <p id="list_title">Community Models:</p>
     <ul>
         {% for file in files %}
-        <li><a href="{{ url_for('main.show', stl_name=file.name) }}">{{ file.name }}</a></li>
+        <li><a class="list_name" href="{{ url_for('main.show', stl_name=file.name) }}">{{ file.name }}</a></li>
         {% endfor %}
     </ul>
 
