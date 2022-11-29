@@ -3,7 +3,6 @@ from .extensions import mongo
 from .main.routes import main
 
 DEBUG = True
-PORT = 5000
 
 
 def create_app(config_object='ChunkSlice.settings'):
