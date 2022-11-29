@@ -65,7 +65,7 @@ pyparsing==2.4.7
 pyRFC3339==1.1
 
 
-python-debian===0.1.43ubuntu1
+
 python-dotenv==0.21.0
 
 python-utils==3.4.5
