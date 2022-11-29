@@ -3,7 +3,7 @@ from .extensions import mongo
 from .main import main
 
 
-def create_app(config_object='ChunkSlice/settings'):
+def create_app(config_object='ChunkSlice.settings'):
     app = Flask(__name__)
 
     app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
