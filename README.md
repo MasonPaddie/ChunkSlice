@@ -10,3 +10,9 @@ GridFS
 A full list of dependencies is found in the requirements.txt file in the root directory. Place the files in a local directory and navigate to the directory containing the requirements.txt file. Run the command below in the terminal to install all dependencies.
 
      pip3 install -r requirements.txt
+
+Then, naviagte to the bin directory and run the below to start the app
+
+     python3 -m flask run
+     
+You can view the landing page by going to http://localhost:5000/home
