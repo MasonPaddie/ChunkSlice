@@ -2,10 +2,17 @@ def showSTL(file_name):
     import vtkplotlib as vpl
     from stl.mesh import Mesh
     from flask import url_for
+    import gridfs
+    from ChunkSlice.extensions import mongo
+
+    chunk_collection = mongo.db
+    data = chunk_collection.fs.files.find_one({'filename': file_name})
+    obj_id = data['_id']
+    out_data = gridfs.GridFS(chunk_collection).get(obj_id).read()
 
     # Read the STL using numpy-stl
     # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
-    mesh = Mesh.from_file((file_name))
+    mesh = Mesh.from_file(file_name, fh=gridfs.GridFS(chunk_collection).get(obj_id))
     
     # Plot the mesh
     vpl.mesh_plot(mesh)

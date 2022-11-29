@@ -2,9 +2,7 @@ from flask import Blueprint, render_template, redirect, request, url_for
 from ChunkSlice.extensions import mongo
 from ChunkSlice.static.py.show import *
 from werkzeug.utils import secure_filename
-from gridfs import GridFS
-
-
+from stl.mesh import Mesh
 
 main = Blueprint('main', __name__)
 
@@ -48,10 +46,8 @@ def show(stl_name):
 @main.route('/show/<stl_name>', methods=["POST", "GET"])
 def show_graph(stl_name):
     chunk_collection = mongo.db.chunkslice
-    grid_fs = GridFS(mongo.db, collection='fs')
     # file = chunk_collection.find_one({'name': stl_name})  # Use for finding in mongo
-    file = chunk_collection.find({'name': stl_name})
-    # fs_file = grid_fs.get(file['_id'])
+    file = chunk_collection.find_one({'name': stl_name})
     # fs_file = grid_fs.get('638259a779d688829c05f19d').read()
 
     # base_data = codecs.encode(fs_file.read(), 'base64')
@@ -63,8 +59,8 @@ def show_graph(stl_name):
     [x_len, y_len, z_len, vol] = ["Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model"]
     # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
-        # showSTL(fs_file)
-        showSTL('/home/masonp/Documents/sponge_house_all.STL')
+        showSTL(file['file'])
+        # showSTL('/home/masonp/Documents/sponge_house_all.STL')
 
     # Graph for plotting points    
     elif request.form['graph'] == 'points':
