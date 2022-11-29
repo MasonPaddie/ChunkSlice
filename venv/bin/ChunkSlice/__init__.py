@@ -18,3 +18,4 @@ def create_app(config_object='ChunkSlice.settings'):
 
     return app
   
+create_app()
