@@ -116,7 +116,7 @@ def get_points(file_name, des_h):
 
     # Plot
     plot = polydata.to_plot()
-    vpl.scatter(polydata.points, color='green', radius = 0.5)
+    vpl.scatter(polydata.points, color='green', radius = 0.1)
     vpl.show()
     return [int(x_max-x_min + 1), int(y_max-y_min + 1), int(z_max-z_min + 1), int(len(coor_arr))]
 
@@ -271,7 +271,6 @@ def get_cubes(file_name, des_h):
         rgb_poly.append([0,12,12])
 
     polydata.polygon_colors = np.array(rgb_poly, float)
-    print(rgb_poly)
     # Plot
     
     plot = polydata.to_plot()
