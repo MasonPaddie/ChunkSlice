@@ -1,4 +1,4 @@
-#!/home/masonp/Desktop/sei-cosmos/projects/ChunkSlice/venv/bin/python3
+#!/home/masonp/Desktop/ChunkSlice/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
