@@ -26,6 +26,7 @@ As a common user, I want to see what other people have done so that I can build 
 As a common user, I want to see the final 3D object along with the cross section so that I can get an understanding of where I am in the progression of the build <br/>
 As a common user, I want to change the size of the model so that I can scale the project to my needs <br/>
 
+## Wireframes
 Home page
 ![image](https://user-images.githubusercontent.com/92054622/204640449-2a380bd6-6a48-42cd-936a-7b3b7af3b174.png)
 
@@ -34,3 +35,9 @@ List page
 
 View part page
 ![image](https://user-images.githubusercontent.com/92054622/204640508-e5d336c5-f7e2-4ade-acfb-d4289b215fb4.png)
+
+## Future Features
+An algorithm that guesses the coordinates of the mesh and then uses the ray-intersection method to determine which coordinates are contained in the .STL. <br/>
+The ability to orient the object before slicing. As is, the applciation can only slice in one-direction and that is based on what direction the original .STL is oriented. <br/>
+The option to import .STEP files and assign the different bodies of the .STEP file to be different materials <br/>
+The option to make the object solid or hollow. 
