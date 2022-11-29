@@ -37,7 +37,11 @@ View part page
 ![image](https://user-images.githubusercontent.com/92054622/204640508-e5d336c5-f7e2-4ade-acfb-d4289b215fb4.png)
 
 ## Future Features
-An algorithm that guesses the coordinates of the mesh and then uses the ray-intersection method to determine which coordinates are contained in the .STL. <br/>
-The ability to orient the object before slicing. As is, the applciation can only slice in one-direction and that is based on what direction the original .STL is oriented. <br/>
-The option to import .STEP files and assign the different bodies of the .STEP file to be different materials <br/>
+An algorithm that guesses the coordinates of the mesh and then uses the ray-intersection method to determine which coordinates are contained in the .STL. <br/><br/>
+The ability to orient the object before slicing. As is, the applciation can only slice in one-direction and that is based on what direction the original .STL is oriented. <br/><br/>
+The option to import .STEP files and assign the different bodies of the .STEP file to be different materials <br/><br/>
 The option to make the object solid or hollow. 
+
+## Presentation
+This is the powerpoint presentation that was used to present the application
+[Chunk Slice.pptx](https://github.com/MasonPaddie/ChunkSlice/files/10117113/Chunk.Slice.pptx)
