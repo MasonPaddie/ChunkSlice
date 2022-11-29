@@ -9,4 +9,4 @@ GridFS
 ## Install Locally
 A full list of dependencies is found in the requirements.txt file in the root directory. Place the files in a local directory and navigate to the directory containing the requirements.txt file. Run the command below in the terminal to install all dependencies.
 
- “` code  “`
+     pip3 install -r requirements.txt
