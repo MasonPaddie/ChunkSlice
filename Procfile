@@ -1,1 +1,1 @@
-web: gunicorn ChunkSlice.main:app
+web: gunicorn ChunkSlice.main:main
