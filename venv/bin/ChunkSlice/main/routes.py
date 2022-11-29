@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, redirect, request, url_for
 from ChunkSlice.extensions import mongo
 from ChunkSlice.static.py.show import *
 from werkzeug.utils import secure_filename
-from stl.mesh import Mesh
 
 main = Blueprint('main', __name__)
 
@@ -46,38 +45,28 @@ def show(stl_name):
 @main.route('/show/<stl_name>', methods=["POST", "GET"])
 def show_graph(stl_name):
     chunk_collection = mongo.db.chunkslice
-    # file = chunk_collection.find_one({'name': stl_name})  # Use for finding in mongo
     file = chunk_collection.find_one({'name': stl_name})
-    # fs_file = grid_fs.get('638259a779d688829c05f19d').read()
 
-    # base_data = codecs.encode(fs_file.read(), 'base64')
-    # fs_file = base64.decode('utf-8')
-    # fs_file = mongo.db.fs.files.find({'filename': file['file']})
-    # print(fs_file)
     # Handles buttons
     # Bring up the graph corresponding to the button pressed
     [x_len, y_len, z_len, vol] = ["Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model", "Enter a Height for the Model"]
     # Graph for 3D model 
     if request.method == "POST" and request.form['graph'] == 'stl':
         showSTL(file['file'])
-        # showSTL('/home/masonp/Documents/sponge_house_all.STL')
 
     # Graph for plotting points    
     elif request.form['graph'] == 'points':
-        # get_points(file['file'])
-         [x_len, y_len, z_len, vol] = get_points('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
+         [x_len, y_len, z_len, vol] = get_points(file['file'], int(request.form['des_h']))
 
     # Graph for plotting cubes    
     elif request.form['graph'] == 'cubes':
-        # get_cubes(file['file'])
-         [x_len, y_len, z_len, vol] = get_cubes('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']))
+         [x_len, y_len, z_len, vol] = get_cubes(file['file'], int(request.form['des_h']))
 
     # Graph for plotting 2D cross section    
     elif request.form['graph'] == 'cross_section':
-        # plot_section(file['file'])
-        [x_len, y_len, z_len, vol] = plot_section('/home/masonp/Documents/sponge_house_all.STL', int(request.form['des_h']), int(request.form['layer']))
+        [x_len, y_len, z_len, vol] = plot_section(file['file'], int(request.form['des_h']), int(request.form['layer']))
 
-    return render_template('show.html', file = file, x_len = x_len, y_len = y_len, z_len = z_len, vol = vol)
+    return render_template('show.html', file = chunk_collection.find({'name': stl_name}), x_len = x_len, y_len = y_len, z_len = z_len, vol = vol)
 
 # Edit Route
 @main.route('/edit/<stl_name>', methods=['GET','POST'])

@@ -1,17 +1,14 @@
 def showSTL(file_name):
     import vtkplotlib as vpl
     from stl.mesh import Mesh
-    from flask import url_for
     import gridfs
     from ChunkSlice.extensions import mongo
 
     chunk_collection = mongo.db
     data = chunk_collection.fs.files.find_one({'filename': file_name})
     obj_id = data['_id']
-    out_data = gridfs.GridFS(chunk_collection).get(obj_id).read()
 
     # Read the STL using numpy-stl
-    # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
     mesh = Mesh.from_file(file_name, fh=gridfs.GridFS(chunk_collection).get(obj_id))
     
     # Plot the mesh
@@ -24,14 +21,16 @@ def get_points(file_name, des_h):
     import vtkplotlib as vpl
     import numpy as np
     import math
-    import collections
     from stl.mesh import Mesh
-    from operator import itemgetter
-    from flask import url_for
+    import gridfs
+    from ChunkSlice.extensions import mongo
+
+    chunk_collection = mongo.db
+    data = chunk_collection.fs.files.find_one({'filename': file_name})
+    obj_id = data['_id']
 
     # Read the STL using numpy-stl
-    # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
-    mesh = Mesh.from_file(file_name)
+    mesh = Mesh.from_file(file_name, fh=gridfs.GridFS(chunk_collection).get(obj_id))
 
     # Polydata
     polydata = vpl.PolyData()
@@ -125,14 +124,16 @@ def get_cubes(file_name, des_h):
     import vtkplotlib as vpl
     import numpy as np
     import math
-    import collections
     from stl.mesh import Mesh
-    from operator import itemgetter
-    from flask import url_for
+    import gridfs
+    from ChunkSlice.extensions import mongo
+
+    chunk_collection = mongo.db
+    data = chunk_collection.fs.files.find_one({'filename': file_name})
+    obj_id = data['_id']
 
     # Read the STL using numpy-stl
-    # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
-    mesh = Mesh.from_file(file_name)
+    mesh = Mesh.from_file(file_name, fh=gridfs.GridFS(chunk_collection).get(obj_id))
 
     # Polydata
     polydata = vpl.PolyData()
@@ -282,14 +283,16 @@ def plot_section(file_name, des_h, layer):
     import vtkplotlib as vpl
     import numpy as np
     import math
-    import collections
     from stl.mesh import Mesh
-    from operator import itemgetter
-    from flask import url_for
+    import gridfs
+    from ChunkSlice.extensions import mongo
+
+    chunk_collection = mongo.db
+    data = chunk_collection.fs.files.find_one({'filename': file_name})
+    obj_id = data['_id']
 
     # Read the STL using numpy-stl
-    # mesh = Mesh.from_file(url_for('main.stl', file_name = file_name))
-    mesh = Mesh.from_file(file_name)
+    mesh = Mesh.from_file(file_name, fh=gridfs.GridFS(chunk_collection).get(obj_id))
 
     polydata = vpl.PolyData()
 
