@@ -2,8 +2,6 @@ from flask import Flask
 from .extensions import mongo
 from .main.routes import main
 
-DEBUG = True
-
 
 def create_app(config_object='ChunkSlice.settings'):
     app = Flask(__name__)
