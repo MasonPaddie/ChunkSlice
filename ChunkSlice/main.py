@@ -86,3 +86,6 @@ def delete(stl_name):
     chunk_collection = mongo.db.chunkslice
     chunk_collection.delete_one({'name': stl_name})
     return redirect(url_for('main.list'))
+
+if __name__ == '__main__':
+    main.run_server(debug=True)
