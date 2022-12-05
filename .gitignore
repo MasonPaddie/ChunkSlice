@@ -120,7 +120,7 @@ package-lock.json
 libdeps.graphml
 build-metrics.json
 config.log
-settings.py
+
 log_config.py
 /tags
 TAGS
